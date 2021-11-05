@@ -9,6 +9,7 @@ public class ShipController : MonoBehaviour
     public float speed = 8;
     private float horizontalMovement;
     private float verticalMovement;
+    public int hp=3;
 
     // Start is called before the first frame update
     void Start()
@@ -23,8 +24,15 @@ public class ShipController : MonoBehaviour
         verticalMovement = Input.GetAxis("Vertical");
     }
 
-    private void FixedUpdate() {
+    void FixedUpdate() {
         rb2d.velocity = new Vector2(horizontalMovement * speed, rb2d.velocity.y);
         rb2d.velocity = new Vector2(rb2d.velocity.x, verticalMovement * speed);
+    }
+
+    public void Damage(){
+        hp--;
+        if(hp==0){
+            Destroy(gameObject);
+        }
     }
 }
