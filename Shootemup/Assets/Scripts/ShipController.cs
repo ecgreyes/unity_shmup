@@ -6,15 +6,23 @@ public class ShipController : MonoBehaviour
 {
 
     Rigidbody2D rb2d;
+    GameObject a,b;
+    public GameObject bullet;
     public float speed = 8;
     private float horizontalMovement;
     private float verticalMovement;
     public int hp=3;
+    public int delay=0;
 
+    void Awake() {
+        rb2d = GetComponent<Rigidbody2D>();
+        a=transform.Find("a").gameObject;
+        b=transform.Find("b").gameObject;
+    }
     // Start is called before the first frame update
     void Start()
     {
-        rb2d = GetComponent<Rigidbody2D>();
+        
     }
 
     // Update is called once per frame
@@ -22,6 +30,12 @@ public class ShipController : MonoBehaviour
     {
         horizontalMovement = Input.GetAxis("Horizontal");
         verticalMovement = Input.GetAxis("Vertical");
+
+        if(Input.GetKey(KeyCode.Space)&&delay>50){
+            Shoot();
+
+        }
+        delay++;
     }
 
     void FixedUpdate() {
@@ -34,5 +48,11 @@ public class ShipController : MonoBehaviour
         if(hp==0){
             Destroy(gameObject);
         }
+    }
+
+    void Shoot(){
+        delay=0;
+        Instantiate(bullet, a.transform.position,Quaternion.identity);
+        Instantiate(bullet, b.transform.position,Quaternion.identity);
     }
 }
